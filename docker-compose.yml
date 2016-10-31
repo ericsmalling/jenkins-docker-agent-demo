@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  jenkins:
+    image: jenkins:alpine
+    container_name: jenkins
+    hostname: jenkins
+    build: jenkins
+    privileged: true
+    ports:
+      - "18080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/tmp/file.sock
+      - /var/jenkins_backups:/var/jenkins_backups
+
+  haproxy:
+    build: haproxy
+    container_name: haproxy
+    links:
+      - jenkins
+    ports:
+      - 80:80
+      - 443:443
+
+volumes:
+  jenkins_home:
