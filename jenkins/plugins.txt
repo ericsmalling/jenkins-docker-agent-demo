@@ -9,12 +9,15 @@ git-client
 github-api
 github
 github-branch-source
+javadoc
+maven-plugin
 nodejs
 parameterized-trigger
 promoted-builds
 plain-credentials
 puppet
 rebuild
+run-condition
 scm-api
 ssh
 token-macro
