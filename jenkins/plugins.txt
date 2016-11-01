@@ -24,3 +24,9 @@ token-macro
 workflow-multibranch
 workflow-cps
 workflow-job
+ec2
+node-iterator-api
+aws-java-sdk
+aws-credentials
+bouncycastle-api
+jackson2-api
