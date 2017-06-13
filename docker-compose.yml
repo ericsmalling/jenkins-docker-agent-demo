@@ -5,14 +5,13 @@ services:
     image: jenkins:alpine
     container_name: jenkins
     hostname: jenkins
-    build: jenkins
     privileged: true
     ports:
       - "18080:8080"
+      - "50000:50000"
     volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/tmp/file.sock
-      - /var/jenkins_backups:/var/jenkins_backups
+      - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
 
   haproxy:
     build: haproxy
@@ -23,5 +22,12 @@ services:
       - 80:80
       - 443:443
 
-volumes:
-  jenkins_home:
+  executor-node:
+    image: jenkins_executor
+    build: jenkins_executor
+    container_name: jenkins_executor
+    privileged: true
+    links:
+      - jenkins
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
