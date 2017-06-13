@@ -12,6 +12,8 @@ services:
     volumes:
       - ./jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+    links:
+      - repo
 
   # haproxy:
   #   build: haproxy
@@ -29,7 +31,20 @@ services:
     privileged: true
     links:
       - jenkins
+      - repo
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./workspace:/var/jenkins_workspace
+
+  repo:
+    image: docker.bintray.io/jfrog/artifactory-oss:latest
+    container_name: repo
+    ports:
+      - "8081:8081"
+    volumes:
+      - repo:/var/opt/jfrog/artifactory
+
+volumes:
+  repo: {}
+
 
