@@ -1,9 +1,8 @@
-version: '2'
+version: '3'
 
 services:
   jenkins:
-    image: jenkins:alpine
-    container_name: jenkins
+    image: jenkins/jenkins:2.71-alpine
     hostname: jenkins
     privileged: true
     ports:
@@ -12,37 +11,21 @@ services:
     volumes:
       - ./jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-    links:
-      - repo
 
   haproxy:
-    build: haproxy
-    container_name: haproxy
-    links:
-      - jenkins
+    image: haproxy:1.7-alpine
     ports:
       - 80:80
       - 443:443
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+
 
   executor-node:
-    image: jenkins_executor
-    build: jenkins_executor
-    container_name: jenkins_executor
+    image: ericsmalling/jenkins_executor:0.3
     privileged: true
-    links:
-      - jenkins
-      - repo
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./workspace:/var/jenkins_workspace
-
-  repo:
-    image: docker.bintray.io/jfrog/artifactory-oss:latest
-    container_name: repo
-    ports:
-      - "8081:8081"
-    volumes:
-      - repo:/var/opt/jfrog/artifactory
-
-volumes:
-  repo: {}
+    deploy:
+      replicas: 1
