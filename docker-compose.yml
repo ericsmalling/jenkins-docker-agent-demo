@@ -13,8 +13,6 @@ services:
 
   haproxy:
     image: haproxy:1.7-alpine
-    depends-on:
-      jenkins
     ports:
       - 80:80
       - 443:443
@@ -24,8 +22,6 @@ services:
 
   executor-node:
     image: ericsmalling/jenkins-executor
-    depends-on:
-      jenkins
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./workspace:/var/jenkins_workspace
