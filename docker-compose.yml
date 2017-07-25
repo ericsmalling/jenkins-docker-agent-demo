@@ -4,7 +4,6 @@ services:
   jenkins:
     image: jenkins/jenkins:2.71-alpine
     hostname: jenkins
-    privileged: true
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -22,10 +21,14 @@ services:
 
 
   executor-node:
-    image: ericsmalling/jenkins_executor:0.3
-    privileged: true
+    image: ericsmalling/jenkins-executor
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./workspace:/var/jenkins_workspace
     deploy:
       replicas: 1
+
+  viz:
+    image: dockersamples/visualizer
+    ports:
+      - "9000:8080"
