@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:2.71-alpine
+    hostname: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  haproxy:
+    image: haproxy:1.7-alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+
+
+  executor-node:
+    image: ericsmalling/jenkins-executor
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - workspace:/var/jenkins_workspace
+    deploy:
+      replicas: 1
+
+volumes:
+  jenkins_home:
+  workspace:
