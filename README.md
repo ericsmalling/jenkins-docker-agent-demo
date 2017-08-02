@@ -1,7 +1,10 @@
 # Docker Based Jenkins Build Agents Demo Configuration
 This docker-compose config was used for the demonstration portion of the presentation at https://www.slideshare.net/EricSmalling1/docker-based-jenkins-build-agents-78280169
 ## Setup steps:
-
+---
+### IMPORTANT SECURITY NOTE - PLEASE READ THE FOLLOWING:
+The Jenkins server and executor agent configured below is for quick setup and demonstration purposes only.  It is not secure in any way and it is in no way intended that these setup instructions be used in your environments.
+---
 ### Initial/pre-demo setup (do once)
 
 **If using a Docker swarm:**
