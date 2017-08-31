@@ -1,4 +1,4 @@
-# Docker Based Jenkins Build Agents Demo Configuration
+# Leveraging Docker on your Build Executor Agents Demo Configuration
 This docker-compose config was used for the demonstration portion of the presentation at https://www.slideshare.net/EricSmalling1/docker-based-jenkins-build-agents-78280169
 ## Setup steps:
 ---
